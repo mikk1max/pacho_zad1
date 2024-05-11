@@ -1,0 +1,14 @@
+{
+    "name": "moja-aplikacja",
+    "version": "1.0.0",
+    "description": "Moja aplikacja Node.js",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "ansi-regex": "^4.1.1",
+        "execa": "^8.0.1",
+        "http-cache-semantics": "^4.1.1"
+    }
+}

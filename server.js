@@ -1,30 +1,22 @@
 const http = require('http');
-const os = require('os');
-const url = require('url');
 
-// Port, na którym serwer będzie nasłuchiwał
 const PORT = process.env.PORT || 3000;
+const TIMEZONE = process.env.TZ || 'UTC';
+const AUTHOR = process.env.AUTHOR || 'Nieznany autor';
 
-// Funkcja obsługująca żądania HTTP
 const requestHandler = (req, res) => {
-  const clientIP = req.connection.remoteAddress;
-  const clientDate = new Date().toLocaleString("pl-PL", {timeZone: "Europe/Warsaw"});
+  const clientIP = req.connection.remoteAddress.replace('::ffff:', '');
+  const clientDate = new Date().toLocaleString("pl-PL", { timeZone: TIMEZONE });
   
   res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write(`<h1>Witaj, Twoje IP to: ${clientIP}</h1>`);
-  res.write(`<p>Data i czas w twojej strefie czasowej: ${clientDate}</p>`);
-  res.end();
+  res.end(`<h1>Witaj, Twoje IP to: ${clientIP}</h1>
+            <p>Data i czas w twojej strefie czasowej: ${clientDate}</p>`);
 };
 
-// Tworzenie serwera HTTP
 const server = http.createServer(requestHandler);
 
-// Nasłuchiwanie na podanym porcie
-server.listen(PORT, (err) => {
-  if (err) {
-    return console.error('Błąd podczas uruchamiania serwera:', err);
-  }
+server.listen(PORT, () => {
   console.log(`Serwer działa, nasłuchuje na porcie ${PORT}`);
-  console.log(`Autor serwera: Maksym Shepeta`);
+  console.log(`Autor serwera: ${AUTHOR}`);
   console.log(`Data uruchomienia: ${new Date().toLocaleString()}`);
 });
